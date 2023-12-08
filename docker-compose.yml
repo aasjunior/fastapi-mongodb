@@ -6,10 +6,14 @@ services:
     ports:
       - 8000:8000
     environment:
-      - MONGODB_URL=mongodb://db:27017/  # Defina a variável de ambiente diretamente aqui
+      - MONGODB_URL=mongodb://db:27017/
     depends_on:
       - db
   db:
     image: mongo:4.4.6
     ports:
       - 27017:27017
+    volumes:
+      - db_data:/data/db  # Monta o volume db_data no caminho /data/db dentro do contêiner
+volumes:
+  db_data:  # Define o volume db_data para persistir os dados

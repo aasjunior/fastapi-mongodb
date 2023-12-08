@@ -22,7 +22,7 @@ def update_item(item_id: str, item: schemas.ItemSchema):
         item_dict["_id"] = str(item_id)  # Converta o ObjectId para uma string
         return item_dict
     else:
-        return Non
+        return None
 
 def delete_item(item_id: str):
     result = database.collection.delete_one({"_id": item_id})
