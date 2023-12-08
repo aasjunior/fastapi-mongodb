@@ -16,7 +16,18 @@ async def create_item(item: schemas.ItemSchema, current_user: str = Depends(auth
 @router.get("/items/")
 async def read_items(current_user: str = Depends(auth.get_current_user)):
     items = services.read_items()
-    return items
+    if items:
+        return items
+    else:
+        raise HTTPException(status_code=404, detail="Items not found")
+
+@router.get("/items/{item_id}")
+async def read_item(item_id: str, current_user: str = Depends(auth.get_current_user)):
+    item = services.read_item(item_id)
+    if item:
+        return item
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
 
 @router.put("/items/{item_id}")
 async def update_item(item_id: str, item: schemas.ItemSchema, current_user: str = Depends(auth.get_current_user)):
